@@ -1,7 +1,6 @@
 package peaksoft.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ public class CourseController {
     @GetMapping
     public String getCourses(Model model) {
         model.addAttribute("courses", courseService.getAll());
-        return "course/course";
+        return "course";
     }
     @GetMapping("/delete/{courseId}")
     public String delete(@PathVariable("courseId") Long id) {
@@ -27,7 +26,7 @@ public class CourseController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("course", new Course());
-        return "course/createCourse";
+        return "createCourse";
     }
     @PostMapping
     public String create(@ModelAttribute Course course) {
@@ -38,7 +37,7 @@ public class CourseController {
     public String edit(@PathVariable("id") Long id, Model model) {
         Course course = courseService.getById(id);
         model.addAttribute("course", course);
-        return "course/editCourse";
+        return "editCourse";
     }
     @PostMapping("/update/{id}")
     public String update(@ModelAttribute Course course, @PathVariable("id") Long id) {

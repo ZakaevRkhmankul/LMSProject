@@ -22,8 +22,8 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lesson save(Lesson lesson) {
-        return lessonRepo.save(lesson);
+    public Lesson save(Lesson lesson,Long courseId) {
+        return lessonRepo.save(lesson,courseId);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<Lesson> getAllLessonByCourseId() {
-        return lessonRepo.getAllLessonByCourseId();
+    public List<Lesson> getAllLessonByCourseId(Long courseId) {
+        return lessonRepo.getAllLessonByCourseId(courseId);
     }
 }

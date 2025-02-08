@@ -10,4 +10,5 @@ public interface StudentRepo {
     void saveStudent(Student student);
     void updateStudent(Long id,Student student);
     void deleteStudent(Long id);
+    void assignStudentToCourse(Long studentId, Long courseId);
 }

@@ -3,6 +3,7 @@ package peaksoft.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,5 +23,5 @@ public class Student {
     private String email;
     private String phoneNumber;
     @ManyToMany(mappedBy = "students")
-    private List<Course> courses;
+    private List<Course> courses=new ArrayList<>();
 }

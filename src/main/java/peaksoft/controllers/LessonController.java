@@ -1,6 +1,5 @@
 package peaksoft.controllers;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,41 +12,38 @@ import peaksoft.service.LessonService;
 @RequestMapping("/lessons")
 public class LessonController {
     private final LessonService lessonService;
-    @GetMapping
-    public String getAllLessons(Model model) {
-        model.addAttribute(lessonService.getdAll());
-        return "/lesson/lesson";
-    }
 
-//    @GetMapping("/{id}")
-//    public String getCoursesLessons(Model model, @PathVariable("id") Long id) {
-//        model.addAttribute("lessons",lessonService.getAllLessonByCourseId());
-//        return "lesson/lesson";
-//    }
-    @GetMapping("/create")
-    public String createLesson(Model model) {
+    @GetMapping("/{courseId}")
+    public String getAllLessons(@PathVariable("courseId") Long courseId,Model model) {
+        model.addAttribute("lessons",lessonService.getAllLessonByCourseId(courseId));
+        return "/lesson";
+    }
+    @GetMapping("/create/{courseId}")
+    public String createLesson(Model model, @PathVariable("courseId") Long courseId) {
         model.addAttribute("lesson", new Lesson());
-        return "lesson/createLesson";
+        model.addAttribute("courseId", courseId);
+        return "createLesson";
     }
-    @PostMapping
-    public String saveLesson(@ModelAttribute("lesson") Lesson lesson) {
-        lessonService.save(lesson);
-        return "redirect:/lessons";
+    @PostMapping("/save/{courseId}")
+    public String saveLesson(@ModelAttribute("lesson") Lesson lesson, @PathVariable("courseId") Long courseId) {
+        lessonService.save(lesson, courseId);
+        return "redirect:/lessons/"+courseId;
     }
-    @GetMapping("/delete/{lessonId}")
-    public String deleteLesson(@PathVariable("lessonId") Long id) {
-        lessonService.delete(id);
-        return "redirect:/lessons";
+    @GetMapping("/delete/{courseId}/{lessonId}")
+    public String deleteLesson(@PathVariable("courseId") Long courseId ,@PathVariable("lessonId") Long instructorId) {
+        lessonService.delete(instructorId);
+        return "redirect:/lessons/"+courseId;
     }
-    @GetMapping("/edit/{id}")
-    public String editLesson(Model model,@PathVariable("id") Long id) {
+    @GetMapping("/edit/{courseId}/{lessonId}")
+    public String editLesson(@PathVariable("courseId")Long courseId,@PathVariable("lessonId") Long id,Model model) {
         Lesson lesson = lessonService.getById(id);
         model.addAttribute("lesson", lesson);
-        return "lesson/editLesson";
+        model.addAttribute("courseId", courseId);
+        return "editLesson";
     }
-    @PostMapping("/update/{id}")
-    public String updateLesson(@ModelAttribute("lesson") Lesson lesson, @PathVariable("id") Long id) {
+    @PostMapping("/update/{courseId}/{lessonId}")
+    public String updateLesson(@ModelAttribute Lesson lesson,@PathVariable("courseId")Long courseId ,@PathVariable("lessonId") Long id) {
         lessonService.update(id,lesson);
-        return "redirect:/lessons";
+        return "redirect:/lessons/"+courseId;
     }
 }

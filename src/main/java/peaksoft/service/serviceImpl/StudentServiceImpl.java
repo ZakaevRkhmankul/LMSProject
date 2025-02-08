@@ -35,4 +35,9 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(Long id) {
         studentRepo.deleteStudent(id);
     }
+
+    @Override
+    public void assignStudentToCourse(Long studentId, Long courseId) {
+        studentRepo.assignStudentToCourse(studentId, courseId);
+    }
 }

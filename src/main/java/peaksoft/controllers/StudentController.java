@@ -13,15 +13,15 @@ import peaksoft.service.StudentService;
 public class StudentController {
     private final StudentService studentService;
 
-    @GetMapping()
-    public String getAlStudents(Model model) {
-        model.addAttribute(studentService.getAllStudents());
-        return "student/student";
+    @GetMapping("/{courseId}")
+    public String getAlStudents(@PathVariable("courseId")Long courseId, Model model) {
+        model.addAttribute("students",studentService.)
+        return "student";
     }
     @GetMapping("/create")
     public String createStudent(Model model) {
         model.addAttribute("student", new Student());
-        return "student/createStudent";
+        return "createStudent";
     }
     @PostMapping()
     public String saveStudent(@ModelAttribute("student") Student student) {
@@ -37,7 +37,7 @@ public class StudentController {
     public String editStudent(Model model,@PathVariable("id") Long id) {
         Student student = studentService.getStudentById(id);
         model.addAttribute("student", student);
-        return "student/editStudent";
+        return "editStudent";
     }
     @PostMapping("/update/{id}")
     public String updateStudent(@ModelAttribute("student") Student student,@PathVariable("id") Long id) {

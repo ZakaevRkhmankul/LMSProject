@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import peaksoft.entities.Course;
 import peaksoft.entities.Student;
 import peaksoft.repositories.StudentRepo;
 
@@ -80,6 +81,22 @@ public class StudentRepoImpl implements StudentRepo {
             entityManager.getTransaction().commit();
 
             System.out.println("Student with id " + id + " has been deleted");
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void assignStudentToCourse(Long studentId, Long courseId) {
+        try {
+            entityManager.getTransaction().begin();
+            Student student = entityManager.find(Student.class, studentId);
+            Course course = entityManager.find(Course.class, courseId);
+            student.getCourses().add(course);
+            course.getStudents().add(student);
+            entityManager.merge(student);
+            entityManager.merge(course);
+            entityManager.getTransaction().commit();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }

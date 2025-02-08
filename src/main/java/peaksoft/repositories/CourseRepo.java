@@ -12,5 +12,4 @@ public interface CourseRepo {
     void save(Course course);
     void update(Long id,Course course);
     void delete(Long id);
-
 }

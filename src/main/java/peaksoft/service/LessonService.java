@@ -7,9 +7,9 @@ import java.util.List;
 public interface LessonService {
     List<Lesson> getdAll();
     Lesson getById(Long id);
-    Lesson save(Lesson lesson);
+    Lesson save(Lesson lesson,Long courseId);
     void delete(Long id);
     void update(Long id,Lesson lesson);
 
-    List<Lesson> getAllLessonByCourseId();
+    List<Lesson> getAllLessonByCourseId(Long courseId);
 }

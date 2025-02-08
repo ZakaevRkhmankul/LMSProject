@@ -43,10 +43,13 @@ public class LessonRepoImpl implements LessonRepo {
     }
 
     @Override
-    public Lesson save(Lesson lesson) {
+    public Lesson save(Lesson lesson,Long courseId) {
         try {
             entityManager.getTransaction().begin();
+            Course course = entityManager.find(Course.class, courseId);
             entityManager.persist(lesson);
+            course.getLessons().add(lesson);
+            lesson.setCourse(course);
             entityManager.getTransaction().commit();
 
             return lesson;
@@ -61,10 +64,16 @@ public class LessonRepoImpl implements LessonRepo {
         try {
             entityManager.getTransaction().begin();
             Lesson lesson = entityManager.find(Lesson.class, id);
-            entityManager.remove(lesson);
+            if (lesson != null) {
+                Course course = lesson.getCourse();
+                if (course != null) {
+                    course.getLessons().remove(lesson);
+                }lesson.setCourse(null);
+                entityManager.remove(lesson);
+            }else {
+                System.out.println("Lesson not found");
+            }
             entityManager.getTransaction().commit();
-
-            System.out.println("Lesson " + id + " deleted");
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -88,11 +97,13 @@ public class LessonRepoImpl implements LessonRepo {
     }
 
     @Override
-    public List<Lesson> getAllLessonByCourseId() {
+    public List<Lesson> getAllLessonByCourseId(Long courseId) {
         try {
             entityManager.getTransaction().begin();
-            List<Lesson> lessons = entityManager.createQuery("select l from Lesson l where l.course.id = :courseId", Lesson.class).getResultList();
+            Course course = entityManager.find(Course.class, courseId);
+            List<Lesson> lessons = course.getLessons();
             entityManager.getTransaction().commit();
+            return lessons;
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }

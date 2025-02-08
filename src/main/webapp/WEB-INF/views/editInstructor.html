@@ -40,18 +40,22 @@
 
 <div class="container">
     <h3 class="text-center mb-4">Edit Lesson</h3>
-    <form th:action="@{/lessons/update/{id}(id=${lesson.id})}" th:object="${lesson}" method="post">
+    <form th:action="@{/instructors/update/{courseId}/{id}(id=${instructor.id},courseId=${courseId})}" th:object="${instructor}" method="post">
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" th:field="*{description}" required>
+            <label for="lastName" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
         </div>
         <div class="mb-3">
-            <label for="dateOfStart" class="form-label">Publisher Date</label>
-            <input type="date" class="form-control" id="dateOfStart" th:field="*{publisherDate}" required>
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" th:field="*{email}" required>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone number</label>
+            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" required>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

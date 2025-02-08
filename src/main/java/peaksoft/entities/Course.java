@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,10 +23,11 @@ public class Course {
     private LocalDate dateOfStart;
     private String description;
     private String imageUrl;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Instructor>instructors=new ArrayList<>();
     @ManyToMany
-    private List<Instructor>instructors;
-    @ManyToMany
-    private List<Student>students;
-    @OneToMany(mappedBy = "course",cascade = CascadeType.PERSIST)
-    private List<Lesson>lessons;
+    private List<Student>students=new ArrayList<>();
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    private List<Lesson>lessons=new ArrayList<>();
+
 }

@@ -26,8 +26,8 @@ public class InstructorServiceImpl implements InstructorService {
         return instructorRepo.getAll();
     }
     @Override
-    public void save(Instructor instructor) {
-        instructorRepo.save(instructor);
+    public void save(Instructor instructor,Long courseId) {
+        instructorRepo.save(instructor, courseId);
     }
 
     @Override
@@ -41,7 +41,14 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public List<Instructor> getInstructorsByCourse(Long courseId) {
-        return instructorRepo.getInstructorsByCourse(courseId);
+    public void assignInstructorToCourse(Long courseId, Long instructorId) {
+        instructorRepo.assignInstructorToCourse(courseId, instructorId);
     }
+
+    @Override
+    public List<Instructor> instructorsByCourseId(Long courseId) {
+        return instructorRepo.getAllInstructorById(courseId);
+    }
+
+
 }
